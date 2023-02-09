@@ -1,79 +1,27 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import {
-  Button,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+
+import { NavigationContainer } from "@react-navigation/native";
+import MyForm from "./src/Pages/MyForm";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from "./src/Pages/Homescreen";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [name, setName] = useState("");
-
   return (
-    <View style={styles.container}>
-      <Text>Login!</Text>
-
-      <TextInput
-        onChangeText={(e) => {
-          setName(e);
-        }}
-        style={{
-          borderColor: "black",
-          borderWidth: 1,
-          width: 100,
-          borderRadius: 10,
-        }}
-      />
-
-      <Button
-        title="Click"
-        onPress={() => {
-          console.log(name);
-        }}
-      />
-
-      <TouchableOpacity
-        onPress={() => {
-          console.log(name);
-        }}
-      >
-        <Image
-          width={100}
-          height={100}
-          style={{
-            width: 100,
-            height: 100,
-          }}
-          source={{
-            uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png",
-          }}
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="Form"
+          options={{ title: "Overview" }}
+          component={MyForm}
         />
+      </Stack.Navigator>
 
-        <Image
-          width={100}
-          height={100}
-          style={{
-            width: 100,
-            height: 100,
-          }}
-          source={require("./assets/favicon.png")}
-        />
-      </TouchableOpacity>
-
-      <StatusBar style="auto" />
-    </View>
+      {/* <MyForm />
+      <StatusBar style="auto" /> */}
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
