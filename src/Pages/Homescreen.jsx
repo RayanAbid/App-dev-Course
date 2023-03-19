@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { auth } from "../utils/firebase";
 
 function HomeScreen({ navigation }) {
   console.log("gegege");
@@ -67,6 +68,14 @@ function HomeScreen({ navigation }) {
       <Button
         title="Go to Details"
         onPress={() => navigation.navigate("Form")}
+      />
+
+      <Button
+        title="Logout"
+        onPress={() => {
+          auth.signOut();
+          navigation.reset({ index: 0, routes: [{ name: "Login" }] });
+        }}
       />
     </View>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Image,
@@ -9,58 +9,41 @@ import {
   View,
 } from "react-native";
 import MyInput from "../Components/MyInput";
+import { auth, db } from "../utils/firebase";
 
 function MyForm() {
   const [name, setName] = useState("");
+  const [user, setUser] = useState("");
+
+  const getUserData = async () => {
+    console.log("auth.currentUser.uid", auth.currentUser.uid);
+    db.collection("users")
+      .doc(auth.currentUser.uid)
+      .get()
+      .then((data) => {
+        if (data.exists) {
+          console.log("Document data:", data.data());
+          setUser(data?.data());
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+      });
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text>Login!</Text>
-      <MyInput
-        newName={(e) => {
-          setName(e);
-        }}
-        placeholder="Fo,e"
-      />
-      <MyInput
-        newName={(e) => {
-          setName(e);
-        }}
-        placeholder="emai,e"
-      />
-      <Button
-        title="Click"
-        onPress={() => {
-          console.log(name);
-        }}
-      />
+      <Text>Hi</Text>
 
-      <TouchableOpacity
-        onPress={() => {
-          console.log(name);
-        }}
-      >
-        <Image
-          width={100}
-          height={100}
-          style={{
-            width: 100,
-            height: 100,
-          }}
-          source={{
-            uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png",
-          }}
-        />
-
-        <Image
-          width={100}
-          height={100}
-          style={{
-            width: 100,
-            height: 100,
-          }}
-          source={require("../../assets/favicon.png")}
-        />
-      </TouchableOpacity>
+      <Text>{user?.name}</Text>
+      <Text>{user?.email}</Text>
     </View>
   );
 }
