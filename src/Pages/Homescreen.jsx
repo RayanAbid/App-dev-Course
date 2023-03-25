@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import MyImagePicker from "../Components/MyImagePicker";
 import { auth } from "../utils/firebase";
 
 function HomeScreen({ navigation }) {
@@ -45,8 +46,8 @@ function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home Screen</Text>
-
-      {loading ? (
+      <MyImagePicker />
+      {/* {loading ? (
         <ActivityIndicator size="large" color="#00ff00" />
       ) : (
         <>
@@ -63,7 +64,7 @@ function HomeScreen({ navigation }) {
             }}
           />
         </>
-      )}
+      )} */}
 
       <Button
         title="Go to Details"
